@@ -16,16 +16,16 @@ namespace XXEExamples.Tests
             AssertXXE.IsXMLParserSafe((string xml) =>
             {
                 XmlReaderSettings settings = new XmlReaderSettings();
-                settings.DtdProcessing = DtdProcessing.Parse;
-                settings.XmlResolver = new XmlUrlResolver();
-                settings.MaxCharactersFromEntities = 6000;
+                settings.DtdProcessing = DtdProcessing.Prohibit;
+                settings.XmlResolver = null;
+                settings.MaxCharactersFromEntities = 1024;
 
                 using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
                 {
                     XmlReader reader = XmlReader.Create(stream, settings);
 
                     var xmlDocument = new XmlDocument();
-                    xmlDocument.XmlResolver = new XmlUrlResolver();
+                    xmlDocument.XmlResolver = null;
                     xmlDocument.Load(reader);
                     return xmlDocument.InnerText;
                 }
