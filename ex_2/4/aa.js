@@ -12,9 +12,22 @@ router.get('/login',function(req, res){
     }
 }); 
 
-router.get('/goto',function(req, res){
-    let url = encodeURI(req.query.url); //vulnerability
-    res.redirect(url);
+router.get('/goto', function(req, res) {
+    let url = req.query.url; // Obtenez l'URL à partir de la requête
+    const allowedDomains = ['https://example.com', 'https://trusteddomain.com']; // Liste des domaines autorisés
+
+    try {
+        const parsedUrl = new URL(url);
+        const isValidDomain = allowedDomains.some(domain => parsedUrl.hostname === new URL(domain).hostname);
+        
+        if (isValidDomain) {
+            res.redirect(url);
+        } else {
+            res.status(400).send('Redirection non autorisée.'); // Ou rediriger vers une page d'erreur
+        }
+    } catch (error) {
+        res.status(400).send('URL invalide.');
+    }
 }); 
 
 
