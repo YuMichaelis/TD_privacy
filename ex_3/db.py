@@ -1,7 +1,9 @@
+
 import sqlite3
 from passlib.hash import pbkdf2_sha256
 
 def db_init():
+
     users = [
         ('admin', pbkdf2_sha256.encrypt('123456')),
         ('john', pbkdf2_sha256.encrypt('Password')),
@@ -10,15 +12,16 @@ def db_init():
 
     conn = sqlite3.connect('users.sqlite')
     c = conn.cursor()
-    c.execute("DROP TABLE IF EXISTS users")
+    c.execute("DROP TABLE users")
     c.execute("CREATE TABLE users (user text, password text, failures int)")
 
-    for u, p in users:
-        # Utilisation de paramètres pour prévenir les injections SQL
-        c.execute("INSERT INTO users (user, password, failures) VALUES (?, ?, ?)", (u, p, 0))
+    for u,p in users:
+        c.execute("INSERT INTO users (user, password, failures) VALUES ('%s', '%s', '%d')" %(u, p, 0))
 
     conn.commit()
     conn.close()
 
+
 if __name__ == '__main__':
     db_init()
+
