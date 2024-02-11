@@ -12,16 +12,10 @@ router.get('/login',function(req, res){
     }
 }); 
 
-router.get('/goto', function(req, res) {
-    let url = req.query.url;
-    // Vérifie si l'URL commence par un chemin approuvé
-    if (url.startsWith("/chemin/approuvé") || url === "urlSpécifiqueAutorisée") {
-        res.redirect(encodeURI(url));
-    } else {
-        // Gérer le cas d'une URL non approuvée
-        res.send("Redirection non autorisée.");
-    }
-});
+router.get('/goto',function(req, res){
+    let url = encodeURI(req.query.url); //vulnerability
+    res.redirect(url);
+}); 
 
 
 module.exports = router
