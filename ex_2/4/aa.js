@@ -14,14 +14,12 @@ router.get('/login',function(req, res){
 
 router.get('/goto', function(req, res) {
     let url = req.query.url;
-    const allowedDomains = ['https://example.com', 'https://yoursite.com'];
-    let isValidRedirect = allowedDomains.some(domain => url.startsWith(domain));
-    
-    if (isValidRedirect) {
+    // Vérifie si l'URL commence par un chemin approuvé
+    if (url.startsWith("/chemin/approuvé") || url === "urlSpécifiqueAutorisée") {
         res.redirect(encodeURI(url));
     } else {
-        // Rediriger vers une page d'erreur ou la page d'accueil si l'URL n'est pas valide
-        res.redirect('/error');
+        // Gérer le cas d'une URL non approuvée
+        res.send("Redirection non autorisée.");
     }
 });
 
