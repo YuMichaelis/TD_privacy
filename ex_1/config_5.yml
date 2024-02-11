@@ -1,6 +1,6 @@
 
 ### Bandit config file generated from:
-# '/usr/local/bin/bandit-config-generator -o config3.yml'
+# '/home/vboxuser/secuprivacy/bandit-env/bin/bandit-config-generator -o config.yml'
 
 ### This config may optionally select a subset of tests to run or skip by
 ### filling out the 'tests' and 'skips' lists given below. If no tests are
@@ -86,7 +86,7 @@
 # B703 : django_mark_safe
 
 # (optional) list included test IDs here, eg '[B101, B406]':
-tests: ['B105', 'B106', 'B107']
+tests: ['B608']
 
 # (optional) list skipped test IDs here, eg '[B101, B406]':
 skips:

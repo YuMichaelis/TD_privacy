@@ -1,4 +1,4 @@
-Run started:2024-01-23 15:51:58.360700
+Run started:2024-02-11 15:24:06.767715
 
 Test results:
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
