@@ -36,7 +36,7 @@ router.get('/login',function(req, res){
 
 router.get('/goto',function(req, res){
     let url = encodeURI(req.query.url); //vulnerability
-    res.redirect(htmlspecialchars(url, ENT_QUOTES, 'UTF-8'));
+    res.redirect(htmlentities(url));
 }); 
 
 
