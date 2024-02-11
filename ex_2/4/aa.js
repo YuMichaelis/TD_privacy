@@ -13,8 +13,19 @@ router.get('/login',function(req, res){
 }); 
 
 router.get('/goto',function(req, res){
-    let url = encodeURI(req.query.url); //vulnerability
-    res.redirect(url);
+    let url = encodeURI(req.query.url);
+    // Liste des domaines approuvés
+    const allowedDomains = ['http://example.com', 'https://yourdomain.com'];
+    // Extrait le domaine de l'URL
+    const domain = new URL(url).hostname;
+
+    // Vérifie si le domaine de l'URL est dans la liste des domaines approuvés
+    if (allowedDomains.some(allowedDomain => new URL(allowedDomain).hostname === domain)) {
+        res.redirect(url);
+    } else {
+        // Si non, redirige vers une page d'erreur ou la page d'accueil
+        res.redirect('/error');
+    }
 }); 
 
 
