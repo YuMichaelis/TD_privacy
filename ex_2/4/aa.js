@@ -34,20 +34,10 @@ router.get('/login',function(req, res){
     }
 }); 
 
-const validUrl = require('valid-url'); // Import the valid-url library or any other URL validation library
-
-const allowedDomains = ['https://example.com', 'https://trusted.com'];
-router.get('/goto', function(req, res) {
-    const url = req.query.url;
-    const domain = new URL(url).hostname;
-
-    if (allowedDomains.some(allowedDomain => domain === new URL(allowedDomain).hostname)) {
-        res.redirect(url);
-    } else {
-        res.status(400).send('Redirection non autorisée.');
-    }
-});
+router.get('/goto',function(req, res){
+    let url = encodeURI(req.query.url); //vulnerability
+    res.redirect(htmlspecialchars(url, ENT_QUOTES, 'UTF-8'));
+}); 
 
 
 module.exports = router
-
