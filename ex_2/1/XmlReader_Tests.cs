@@ -16,21 +16,22 @@ namespace XXEExamples.Tests
             AssertXXE.IsXMLParserSafe((string xml) =>
             {
                 XmlReaderSettings settings = new XmlReaderSettings();
-                settings.DtdProcessing = DtdProcessing.Parse;
-                settings.XmlResolver = new XmlUrlResolver();
-                settings.MaxCharactersFromEntities = 6000;
+                settings.DtdProcessing = DtdProcessing.Prohibit;// Sécurisé : interdit le traitement des DTD
+                settings.XmlResolver = null;// Sécurisé : empêche la résolution d'URL externes
+                settings.MaxCharactersFromEntities = 1024;// Limiter le nombre de caractères résultant de l'expansion des entités
 
                 using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
                 {
                     XmlReader reader = XmlReader.Create(stream, settings);
 
                     var xmlDocument = new XmlDocument();
-                    xmlDocument.XmlResolver = new XmlUrlResolver();
+                    xmlDocument.XmlResolver = null;// Sécurisé : désactive le résolveur d'URL pour XmlDocument
                     xmlDocument.Load(reader);
                     return xmlDocument.InnerText;
                 }
             }, false);
         }
+
 
         [Test]
         public void XMLReader_WithDTDProcessingIgnored_Safe()
