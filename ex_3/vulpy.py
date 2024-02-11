@@ -12,10 +12,8 @@ from mod_mfa import mod_mfa
 from mod_posts import mod_posts
 from mod_user import mod_user
 
-import os
-
 app = Flask('vulpy')
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your_default_secret_key')
+app.config['SECRET_KEY'] = 'aaaaaaa'
 
 app.register_blueprint(mod_hello, url_prefix='/hello')
 app.register_blueprint(mod_user, url_prefix='/user')
@@ -54,5 +52,4 @@ def add_csp_headers(response):
     return response
 
 
-app.run(debug=os.getenv('FLASK_DEBUG', 'False') == 'True', host='127.0.1.1', port=5000, extra_files='csp.txt')
-
+app.run(debug=True, host='127.0.1.1', port=5000, extra_files='csp.txt')
