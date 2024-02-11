@@ -1,4 +1,4 @@
-Run started:2024-02-11 21:43:08.581985
+Run started:2024-02-11 22:05:44.376853
 
 Test results:
 >> Issue: [B113:request_without_timeout] Requests call without timeout
@@ -61,26 +61,6 @@ Test results:
 22	    if result.returncode == 0:
 
 --------------------------------------------------
->> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
-   More Info: https://bandit.readthedocs.io/en/1.7.6/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./db.py:19:18
-18	    for u,p in users:
-19	        c.execute("INSERT INTO users (user, password, failures) VALUES ('%s', '%s', '%d')" %(u, p, 0))
-20	
-
---------------------------------------------------
->> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
-   More Info: https://bandit.readthedocs.io/en/1.7.6/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./db_init.py:20:18
-19	    for u,p in users:
-20	        c.execute("INSERT INTO users (username, password, failures, mfa_enabled, mfa_secret) VALUES ('%s', '%s', '%d', '%d', '%s')" %(u, p, 0, 0, ''))
-21	
-
---------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
    Severity: Medium   Confidence: Medium
    CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
@@ -122,107 +102,39 @@ Test results:
 23	
 
 --------------------------------------------------
->> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+>> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
    Severity: Medium   Confidence: Medium
-   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
-   More Info: https://bandit.readthedocs.io/en/1.7.6/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./libuser.py:12:21
-11	
-12	    user = c.execute("SELECT * FROM users WHERE username = '{}' and password = '{}'".format(username, password)).fetchone()
-13	
-
---------------------------------------------------
->> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
-   More Info: https://bandit.readthedocs.io/en/1.7.6/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./libuser.py:25:14
-24	
-25	    c.execute("INSERT INTO users (username, password, failures, mfa_enabled, mfa_secret) VALUES ('%s', '%s', '%d', '%d', '%s')" %(username, password, 0, 0, ''))
-26	
-
---------------------------------------------------
->> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
-   More Info: https://bandit.readthedocs.io/en/1.7.6/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./libuser.py:53:14
-52	
-53	    c.execute("UPDATE users SET password = '{}' WHERE username = '{}'".format(password, username))
-54	    conn.commit()
-
---------------------------------------------------
->> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'aaaaaaa'
-   Severity: Low   Confidence: Medium
-   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
-   More Info: https://bandit.readthedocs.io/en/1.7.6/plugins/b105_hardcoded_password_string.html
-   Location: ./vulpy-ssl.py:13:11
-12	app = Flask('vulpy')
-13	app.config['SECRET_KEY'] = 'aaaaaaa'
-14	
-
---------------------------------------------------
->> Issue: [B201:flask_debug_true] A Flask app appears to be run with debug=True, which exposes the Werkzeug debugger and allows the execution of arbitrary code.
-   Severity: High   Confidence: Medium
-   CWE: CWE-94 (https://cwe.mitre.org/data/definitions/94.html)
-   More Info: https://bandit.readthedocs.io/en/1.7.6/plugins/b201_flask_debug_true.html
-   Location: ./vulpy-ssl.py:29:0
-28	
-29	app.run(debug=True, host='127.0.1.1', ssl_context=('/tmp/acme.cert', '/tmp/acme.key'))
+   CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.6/plugins/b108_hardcoded_tmp_directory.html
+   Location: ./vulpy-ssl.py:41:90
+40	
+41	app.run(debug=os.getenv('FLASK_DEBUG', 'False') == 'True', host='127.0.1.1', ssl_context=('/tmp/acme.cert', '/tmp/acme.key'))
 
 --------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
    Severity: Medium   Confidence: Medium
    CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
    More Info: https://bandit.readthedocs.io/en/1.7.6/plugins/b108_hardcoded_tmp_directory.html
-   Location: ./vulpy-ssl.py:29:51
-28	
-29	app.run(debug=True, host='127.0.1.1', ssl_context=('/tmp/acme.cert', '/tmp/acme.key'))
-
---------------------------------------------------
->> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
-   More Info: https://bandit.readthedocs.io/en/1.7.6/plugins/b108_hardcoded_tmp_directory.html
-   Location: ./vulpy-ssl.py:29:69
-28	
-29	app.run(debug=True, host='127.0.1.1', ssl_context=('/tmp/acme.cert', '/tmp/acme.key'))
-
---------------------------------------------------
->> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'aaaaaaa'
-   Severity: Low   Confidence: Medium
-   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
-   More Info: https://bandit.readthedocs.io/en/1.7.6/plugins/b105_hardcoded_password_string.html
-   Location: ./vulpy.py:16:11
-15	app = Flask('vulpy')
-16	app.config['SECRET_KEY'] = 'aaaaaaa'
-17	
-
---------------------------------------------------
->> Issue: [B201:flask_debug_true] A Flask app appears to be run with debug=True, which exposes the Werkzeug debugger and allows the execution of arbitrary code.
-   Severity: High   Confidence: Medium
-   CWE: CWE-94 (https://cwe.mitre.org/data/definitions/94.html)
-   More Info: https://bandit.readthedocs.io/en/1.7.6/plugins/b201_flask_debug_true.html
-   Location: ./vulpy.py:55:0
-54	
-55	app.run(debug=True, host='127.0.1.1', port=5000, extra_files='csp.txt')
+   Location: ./vulpy-ssl.py:41:108
+40	
+41	app.run(debug=os.getenv('FLASK_DEBUG', 'False') == 'True', host='127.0.1.1', ssl_context=('/tmp/acme.cert', '/tmp/acme.key'))
 
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 495
+	Total lines of code: 494
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 5
-		Medium: 14
-		High: 2
+		Low: 3
+		Medium: 9
+		High: 0
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 3
-		Medium: 15
+		Medium: 6
 		High: 3
 Files skipped (0):
