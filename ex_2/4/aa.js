@@ -12,21 +12,16 @@ router.get('/login',function(req, res){
     }
 }); 
 
-router.get('/goto',function(req, res){
-    let url = encodeURI(req.query.url);
-    // Liste des domaines approuvés
-    const allowedDomains = ['http://example.com', 'https://yourdomain.com'];
-    // Extrait le domaine de l'URL
-    const domain = new URL(url).hostname;
-
-    // Vérifie si le domaine de l'URL est dans la liste des domaines approuvés
-    if (allowedDomains.some(allowedDomain => new URL(allowedDomain).hostname === domain)) {
-        res.redirect(url);
+router.get('/goto', function(req, res) {
+    let url = req.query.url;
+    // Vérifie si l'URL commence par un chemin approuvé
+    if (url.startsWith("/chemin/approuvé") || url === "urlSpécifiqueAutorisée") {
+        res.redirect(encodeURI(url));
     } else {
-        // Si non, redirige vers une page d'erreur ou la page d'accueil
-        res.redirect('/error');
+        // Gérer le cas d'une URL non approuvée
+        res.send("Redirection non autorisée.");
     }
-}); 
+});
 
 
 module.exports = router
