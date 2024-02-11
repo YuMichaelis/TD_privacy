@@ -36,18 +36,18 @@ router.get('/login',function(req, res){
 
 const validUrl = require('valid-url'); // Import the valid-url library or any other URL validation library
 
-router.get('/goto', function (req, res) {
+const allowedDomains = ['https://example.com', 'https://trusted.com'];
+router.get('/goto', function(req, res) {
     const url = req.query.url;
+    const domain = new URL(url).hostname;
 
-    // Validate the URL
-    if (validUrl.isUri(url)) {
-        // URL is valid, perform the redirect
+    if (allowedDomains.some(allowedDomain => domain === new URL(allowedDomain).hostname)) {
         res.redirect(url);
     } else {
-        // URL is not valid, handle the error (e.g., redirect to a safe location)
-        res.status(400).send('Invalid URL');
+        res.status(400).send('Redirection non autorisée.');
     }
 });
 
 
 module.exports = router
+
